@@ -306,6 +306,11 @@ gfx/mobile/pichu_animated.2bpp: tools/gfx += --trim-whitespace
 gfx/mobile/stadium2_n64.2bpp: tools/gfx += --trim-whitespace
 
 
+### Misc from Gold/Silver
+gfx/intro/fire1.2bpp: gfx/intro/charizard1.2bpp gfx/intro/charizard2_top.2bpp gfx/intro/space.2bpp ; cat $^ > $@
+gfx/intro/fire2.2bpp: gfx/intro/charizard2_bottom.2bpp gfx/intro/charizard3.2bpp ; cat $^ > $@
+gfx/intro/fire3.2bpp: gfx/intro/fire.2bpp gfx/intro/unused_blastoise_venusaur.2bpp ; cat $^ > $@
+
 ### Catch-all graphics rules
 
 %.2bpp: %.png

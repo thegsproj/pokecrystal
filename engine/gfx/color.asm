@@ -200,7 +200,7 @@ Intro_LoadPackPalettes: ; unreferenced
 	call GetPredefPal
 	jp LoadHLPaletteIntoDE
 
-GSIntro_LoadMonPalette: ; unreferenced
+Intro_LoadMonPalette:
 	call CheckCGB
 	jr nz, .cgb
 	ldh a, [hSGB]
