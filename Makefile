@@ -1,10 +1,9 @@
 roms := \
-	pokecrystal.gbc \
-	pokecrystal11.gbc \
-	pokecrystal_au.gbc \
-	pokecrystal_debug.gbc \
-	pokecrystal11_debug.gbc
-patches := pokecrystal11.patch
+	pokegold.gbc \
+	pokesilver.gbc \
+	pokegold_debug.gbc \
+	pokesilver_debug.gbc
+patches := pokegold.patch pokesilver.patch
 
 rom_obj := \
 	audio.o \
@@ -24,12 +23,12 @@ rom_obj := \
 	gfx/tilesets.o \
 	lib/mobile/main.o
 
-pokecrystal_obj         := $(rom_obj:.o=.o)
-pokecrystal11_obj       := $(rom_obj:.o=11.o)
-pokecrystal_au_obj      := $(rom_obj:.o=_au.o)
-pokecrystal_debug_obj   := $(rom_obj:.o=_debug.o)
-pokecrystal11_debug_obj := $(rom_obj:.o=11_debug.o)
-pokecrystal11_vc_obj    := $(rom_obj:.o=11_vc.o)
+pokegold_obj         := $(rom_obj:.o=gold.o)
+pokesilver_obj       := $(rom_obj:.o=silver.o)
+pokegold_debug_obj   := $(rom_obj:.o=gold_debug.o)
+pokesilver_debug_obj := $(rom_obj:.o=silver_debug.o)
+pokegold_vc_obj      := $(rom_obj:.o=gold_vc.o)
+pokesilver_vc_obj    := $(rom_obj:.o=silver_vc.o)
 
 
 ### Build tools
@@ -50,18 +49,18 @@ RGBLINK ?= $(RGBDS)rgblink
 ### Build targets
 
 .SUFFIXES:
-.PHONY: all crystal crystal11 crystal_au crystal_debug crystal11_debug clean tidy compare tools
+.PHONY: all gold silver gold_debug silver_debug clean tidy compare tools
 .SECONDEXPANSION:
 .PRECIOUS:
 .SECONDARY:
 
-all: crystal
-crystal:         pokecrystal.gbc
-crystal11:       pokecrystal11.gbc
-crystal_au:      pokecrystal_au.gbc
-crystal_debug:   pokecrystal_debug.gbc
-crystal11_debug: pokecrystal11_debug.gbc
-crystal11_vc:    pokecrystal11.patch
+all: $(roms)
+gold:         pokegold.gbc
+silver:       pokesilver.gbc
+gold_debug:   pokegold_debug.gbc
+silver_debug: pokesilver_debug.gbc
+gold_vc:      pokegold.patch
+silver_vc:    pokesilver.patch
 
 clean: tidy
 	find gfx \
@@ -87,12 +86,12 @@ tidy:
 	      $(patches:.patch=_vc.sym) \
 	      $(patches:.patch=_vc.map) \
 	      $(patches:%.patch=vc/%.constants.sym) \
-	      $(pokecrystal_obj) \
-	      $(pokecrystal11_obj) \
-	      $(pokecrystal11_vc_obj) \
-	      $(pokecrystal_au_obj) \
-	      $(pokecrystal_debug_obj) \
-	      $(pokecrystal11_debug_obj) \
+	      $(pokegold_obj) \
+	      $(pokesilver_obj) \
+	      $(pokegold_vc_obj) \
+	      $(pokesilver_vc_obj) \
+	      $(pokegold_debug_obj) \
+	      $(pokesilver_debug_obj) \
 	      rgbdscheck.o
 	$(MAKE) clean -C tools/
 
@@ -109,12 +108,12 @@ ifeq ($(DEBUG),1)
 RGBASMFLAGS += -E
 endif
 
-$(pokecrystal_obj):         RGBASMFLAGS +=
-$(pokecrystal11_obj):       RGBASMFLAGS += -D _CRYSTAL11
-$(pokecrystal_au_obj):      RGBASMFLAGS += -D _CRYSTAL11 -D _CRYSTAL_AU
-$(pokecrystal_debug_obj):   RGBASMFLAGS += -D _DEBUG
-$(pokecrystal11_debug_obj): RGBASMFLAGS += -D _CRYSTAL11 -D _DEBUG
-$(pokecrystal11_vc_obj):    RGBASMFLAGS += -D _CRYSTAL11 -D _CRYSTAL11_VC
+$(pokegold_obj):            RGBASMFLAGS += -D _CRYSTAL11 -D _GOLD
+$(pokesilver_obj):          RGBASMFLAGS += -D _CRYSTAL11 -D _SILVER
+$(pokegold_debug_obj):      RGBASMFLAGS += -D _CRYSTAL11 -D _GOLD -D _DEBUG
+$(pokesilver_debug_obj):    RGBASMFLAGS += -D _CRYSTAL11 -D _SILVER -D _DEBUG
+$(pokegold_vc_obj):         RGBASMFLAGS += -D _CRYSTAL11 -D _GOLD -D _CRYSTAL11_VC
+$(pokesilver_vc_obj):       RGBASMFLAGS += -D _CRYSTAL11 -D _SILVER -D _CRYSTAL11_VC
 
 %.patch: vc/%.constants.sym %_vc.gbc %.gbc vc/%.patch.template
 	tools/make_patch $*_vc.sym $^ $@
@@ -137,12 +136,13 @@ ifeq (,$(filter clean tidy tools,$(MAKECMDGOALS)))
 $(info $(shell $(MAKE) -C tools))
 
 # Dependencies for shared objects objects
-$(foreach obj, $(pokecrystal_obj), $(eval $(call DEP,$(obj),$(obj:.o=.asm))))
-$(foreach obj, $(pokecrystal11_obj), $(eval $(call DEP,$(obj),$(obj:11.o=.asm))))
-$(foreach obj, $(pokecrystal_au_obj), $(eval $(call DEP,$(obj),$(obj:_au.o=.asm))))
-$(foreach obj, $(pokecrystal_debug_obj), $(eval $(call DEP,$(obj),$(obj:_debug.o=.asm))))
-$(foreach obj, $(pokecrystal11_debug_obj), $(eval $(call DEP,$(obj),$(obj:11_debug.o=.asm))))
-$(foreach obj, $(pokecrystal11_vc_obj), $(eval $(call DEP,$(obj),$(obj:11_vc.o=.asm))))
+$(foreach obj, $(pokegold_obj), $(eval $(call DEP,$(obj),$(obj:gold.o=.asm))))
+$(foreach obj, $(pokesilver_obj), $(eval $(call DEP,$(obj),$(obj:silver.o=.asm))))
+$(foreach obj, $(pokegold_debug_obj), $(eval $(call DEP,$(obj),$(obj:gold_debug.o=.asm))))
+$(foreach obj, $(pokesilver_debug_obj), $(eval $(call DEP,$(obj),$(obj:silver_debug.o=.asm))))
+$(foreach obj, $(pokegold_vc_obj), $(eval $(call DEP,$(obj),$(obj:gold_vc.o=.asm))))
+$(foreach obj, $(pokesilver_vc_obj), $(eval $(call DEP,$(obj),$(obj:silver_vc.o=.asm))))
+
 
 # Dependencies for VC files that need to run scan_includes
 %.constants.sym: %.constants.asm $(shell tools/scan_includes %.constants.asm) | rgbdscheck.o
@@ -151,19 +151,19 @@ $(foreach obj, $(pokecrystal11_vc_obj), $(eval $(call DEP,$(obj),$(obj:11_vc.o=.
 endif
 
 
-pokecrystal_opt         = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal11_opt       = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal_au_opt      = -Cjv -t PM_CRYSTAL -i BYTU -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal_debug_opt   = -Cjv -t PM_CRYSTAL -i BYTE -n 0 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal11_debug_opt = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
-pokecrystal11_vc_opt    = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+pokegold_opt         = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+pokesilver_opt       = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+pokegold_debug_opt   = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+pokesilver_debug_opt = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+pokegold_vc_opt      = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
+pokesilver_vc_opt    = -Cjv -t PM_CRYSTAL -i BYTE -n 1 -k 01 -l 0x33 -m 0x10 -r 3 -p 0
 
-pokecrystal_base         = us
-pokecrystal11_base       = us
-pokecrystal_au_base      = us
-pokecrystal11_vc_base    = us
-pokecrystal_debug_base   = dbg
-pokecrystal11_debug_base = dbg
+pokegold_base         = us
+pokesilver_base       = us
+pokegold_vc_base      = us
+pokesilver_vc_base    = us
+pokegold_debug_base   = dbg
+pokesilver_debug_base = dbg
 
 %.gbc: $$(%_obj) layout.link
 	$(RGBLINK) -n $*.sym -m $*.map -l layout.link -o $@ $(filter %.o,$^)
@@ -239,10 +239,6 @@ gfx/pokegear/pokegear_sprites.2bpp: tools/gfx += --trim-whitespace
 
 gfx/mystery_gift/mystery_gift.2bpp: tools/gfx += --trim-whitespace
 
-gfx/title/crystal.2bpp: tools/gfx += --interleave --png=$<
-gfx/title/old_fg.2bpp: tools/gfx += --interleave --png=$<
-gfx/title/logo.2bpp: rgbgfx += -x 4
-
 gfx/trade/ball.2bpp: tools/gfx += --remove-whitespace
 gfx/trade/game_boy.2bpp: tools/gfx += --remove-duplicates --preserve=0x23,0x27
 gfx/trade/game_boy_cable.2bpp: gfx/trade/game_boy.2bpp gfx/trade/link_cable.2bpp ; cat $^ > $@
@@ -305,6 +301,16 @@ gfx/mobile/phone_tiles.2bpp: tools/gfx += --remove-whitespace
 gfx/mobile/pichu_animated.2bpp: tools/gfx += --trim-whitespace
 gfx/mobile/stadium2_n64.2bpp: tools/gfx += --trim-whitespace
 
+
+### Misc from Gold/Silver
+gfx/intro/fire1.2bpp: gfx/intro/charizard1.2bpp gfx/intro/charizard2_top.2bpp gfx/intro/space.2bpp ; cat $^ > $@
+gfx/intro/fire2.2bpp: gfx/intro/charizard2_bottom.2bpp gfx/intro/charizard3.2bpp ; cat $^ > $@
+gfx/intro/fire3.2bpp: gfx/intro/fire.2bpp gfx/intro/unused_blastoise_venusaur.2bpp ; cat $^ > $@
+
+gfx/title/logo_bottom_gold.2bpp: tools/gfx += --trim-whitespace
+gfx/title/logo_bottom_silver.2bpp: tools/gfx += --trim-whitespace
+gfx/title/hooh_gold.2bpp: tools/gfx += --interleave --png=$<
+gfx/title/lugia_silver.2bpp: tools/gfx += --interleave --png=$<
 
 ### Catch-all graphics rules
 
