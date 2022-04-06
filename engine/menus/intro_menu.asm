@@ -972,7 +972,7 @@ NUM_TITLESCREENOPTIONS EQU const_value
 IntroSequence:
 	callfar SplashScreen
 	jr c, StartTitleScreen
-	farcall CrystalIntro
+	farcall GoldSilverIntro
 
 	; fallthrough
 
@@ -1032,15 +1032,21 @@ StartTitleScreen:
 	dw ResetClock
 
 .TitleScreen:
-	farcall _TitleScreen
+	farcall TitleScreen
 	ret
 
 RunTitleScreen:
+	call ScrollTitleScreenClouds
 	ld a, [wJumptableIndex]
 	bit 7, a
 	jr nz, .done_title
 	call TitleScreenScene
-	farcall SuicuneFrameIterator
+	ld a, $1
+	ldh [hOAMUpdate], a
+	farcall PlaySpriteAnimations
+	xor a
+	ldh [hOAMUpdate], a
+	call UpdateTitleTrailSprite
 	call DelayFrame
 	and a
 	ret
@@ -1049,11 +1055,12 @@ RunTitleScreen:
 	scf
 	ret
 
-UnusedTitlePerspectiveScroll: ; unreferenced
-; Similar behavior to Intro_PerspectiveScrollBG.
+ScrollTitleScreenClouds:
+IF DEF(_GOLD)
 	ldh a, [hVBlankCounter]
 	and $7
 	ret nz
+ENDC
 	ld hl, wLYOverrides + $5f
 	ld a, [hl]
 	dec a
@@ -1073,7 +1080,6 @@ TitleScreenScene:
 	jp hl
 
 .scenes
-	dw TitleScreenEntrance
 	dw TitleScreenTimer
 	dw TitleScreenMain
 	dw TitleScreenEnd
@@ -1083,53 +1089,6 @@ TitleScreenNextScene: ; unreferenced
 	inc [hl]
 	ret
 
-TitleScreenEntrance:
-; Animate the logo:
-; Move each line by 4 pixels until our count hits 0.
-	ldh a, [hSCX]
-	and a
-	jr z, .done
-	sub 4
-	ldh [hSCX], a
-
-; Lay out a base (all lines scrolling together).
-	ld e, a
-	ld hl, wLYOverrides
-	ld bc, 8 * 10 ; logo height
-	call ByteFill
-
-; Reversed signage for every other line's position.
-; This is responsible for the interlaced effect.
-	ld a, e
-	xor $ff
-	inc a
-
-	ld b, 8 * 10 / 2 ; logo height / 2
-	ld hl, wLYOverrides + 1
-.loop
-	ld [hli], a
-	inc hl
-	dec b
-	jr nz, .loop
-
-	farcall AnimateTitleCrystal
-	ret
-
-.done
-; Next scene
-	ld hl, wJumptableIndex
-	inc [hl]
-	xor a
-	ldh [hLCDCPointer], a
-
-; Play the title screen music.
-	ld de, MUSIC_TITLE
-	call PlayMusic
-
-	ld a, $88
-	ldh [hWY], a
-	ret
-
 TitleScreenTimer:
 ; Next scene
 	ld hl, wJumptableIndex
@@ -1137,7 +1096,11 @@ TitleScreenTimer:
 
 ; Start a timer
 	ld hl, wTitleScreenTimer
+IF DEF(_GOLD)
+	ld de, 84 * 60 + 16
+ELIF DEF(_SILVER)
 	ld de, 73 * 60 + 36
+ENDC
 	ld [hl], e
 	inc hl
 	ld [hl], d
@@ -1269,11 +1232,12 @@ ResetClock:
 	farcall _ResetClock
 	jp Init
 
-UpdateTitleTrailSprite: ; unreferenced
+UpdateTitleTrailSprite:
 	; If bit 0 or 1 of [wTitleScreenTimer] is set, we don't need to be here.
 	ld a, [wTitleScreenTimer]
 	and %00000011
 	ret nz
+IF DEF(_GOLD)
 	ld bc, wSpriteAnim10
 	ld hl, SPRITEANIMSTRUCT_FRAME
 	add hl, bc
@@ -1297,10 +1261,14 @@ UpdateTitleTrailSprite: ; unreferenced
 	ret z
 	ld e, a
 	ld d, [hl]
+ELIF DEF(_SILVER)
+	depixel 15, 11, 4, 0
+ENDC
 	ld a, SPRITE_ANIM_INDEX_GS_TITLE_TRAIL
 	call InitSpriteAnimStruct
 	ret
 
+IF DEF(_GOLD)
 .TitleTrailCoords:
 trail_coords: MACRO
 rept _NARG / 2
@@ -1319,6 +1287,7 @@ ENDM
 	trail_coords 11, 17, 11, 15
 	trail_coords  0,  0, 11, 15
 	trail_coords  0,  0, 11, 11
+ENDC
 
 Copyright:
 	call ClearTilemap
