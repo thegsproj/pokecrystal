@@ -52,8 +52,8 @@ ParryMarillSwarm: ; start swarm
 	iftrue ParryMarillAlreadySwarming
 	setflag ENGINE_MARILL_SWARM
 	getmonname STRING_BUFFER_4, MARILL
-	swarm SWARM_MARILL, ROUTE_45
-	getlandmarkname STRING_BUFFER_5, LANDMARK_ROUTE_45
+	swarm SWARM_MARILL, MOUNT_MORTAR_1F_OUTSIDE
+	getlandmarkname STRING_BUFFER_5, LANDMARK_MT_MORTAR
 	farsjump ParrySwarmScript
 
 ParryMarillAlreadySwarming:
