@@ -38,7 +38,11 @@ JohtoWaterWildMons:
 	end_water_wildmons
 
 	def_water_wildmons SLOWPOKE_WELL_B2F
+	IF DEF(_GOLD)
+	db 4 percent ; encounter rate
+	ELIF DEF(_SILVER)
 	db 2 percent ; encounter rate
+	ENDC
 	db 15, SLOWPOKE
 	db 20, SLOWPOKE
 	db 20, SLOWBRO
@@ -53,22 +57,22 @@ JohtoWaterWildMons:
 
 	def_water_wildmons MOUNT_MORTAR_1F_OUTSIDE
 	db 4 percent ; encounter rate
+	db 20, GOLDEEN
 	db 15, GOLDEEN
-	db 20, MARILL
 	db 20, SEAKING
 	end_water_wildmons
 
 	def_water_wildmons MOUNT_MORTAR_2F_INSIDE
 	db 2 percent ; encounter rate
 	db 20, GOLDEEN
-	db 25, MARILL
+	db 25, GOLDEEN
 	db 25, SEAKING
 	end_water_wildmons
 
 	def_water_wildmons MOUNT_MORTAR_B1F
 	db 2 percent ; encounter rate
+	db 20, GOLDEEN
 	db 15, GOLDEEN
-	db 20, MARILL
 	db 20, SEAKING
 	end_water_wildmons
 
@@ -96,7 +100,7 @@ JohtoWaterWildMons:
 	def_water_wildmons SILVER_CAVE_ROOM_2
 	db 2 percent ; encounter rate
 	db 35, SEAKING
-	db 35, GOLDUCK
+	db 40, SEAKING
 	db 35, GOLDEEN
 	end_water_wildmons
 
@@ -119,13 +123,6 @@ JohtoWaterWildMons:
 	db 15, MAGIKARP
 	db 10, MAGIKARP
 	db 10, DRATINI
-	end_water_wildmons
-
-	def_water_wildmons OLIVINE_PORT
-	db 2 percent ; encounter rate
-	db 20, TENTACOOL
-	db 15, TENTACOOL
-	db 20, TENTACRUEL
 	end_water_wildmons
 
 	def_water_wildmons ROUTE_30
@@ -172,9 +169,15 @@ JohtoWaterWildMons:
 
 	def_water_wildmons ROUTE_41
 	db 6 percent ; encounter rate
+	IF DEF(_GOLD)
 	db 20, TENTACOOL
 	db 20, TENTACRUEL
 	db 20, MANTINE
+	ELIF DEF(_SILVER)
+	db 20, TENTACOOL
+	db 20, TENTACRUEL
+	db 15, TENTACOOL
+	ENDC
 	end_water_wildmons
 
 	def_water_wildmons ROUTE_42
@@ -248,7 +251,11 @@ JohtoWaterWildMons:
 	end_water_wildmons
 
 	def_water_wildmons LAKE_OF_RAGE
+	IF DEF(_GOLD)
+	db 4 percent ; encounter rate
+	ELIF DEF(_SILVER)
 	db 6 percent ; encounter rate
+	ENDC
 	db 15, MAGIKARP
 	db 10, MAGIKARP
 	db 15, GYARADOS
@@ -266,6 +273,13 @@ JohtoWaterWildMons:
 	db 35, POLIWHIRL
 	db 40, POLIWHIRL
 	db 35, POLIWAG
+	end_water_wildmons
+
+	def_water_wildmons OLIVINE_PORT
+	db 2 percent ; encounter rate
+	db 20, TENTACOOL
+	db 15, TENTACOOL
+	db 20, TENTACRUEL
 	end_water_wildmons
 
 	db -1 ; end

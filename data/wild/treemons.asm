@@ -108,22 +108,42 @@ TreeMonSet_Lake:
 	db -1
 
 TreeMonSet_Forest:
+IF DEF(_GOLD)
 ; common
-	db 50, HOOTHOOT,   10
-	db 15, PINECO,     10
-	db 15, PINECO,     10
-	db 10, NOCTOWL,    10
+	db 50, CATERPIE,   10
+	db 15, CATERPIE,   10
+	db 15, METAPOD,    10
+	db 10, EXEGGCUTE,  10
+	db  5, EXEGGCUTE,  10
 	db  5, BUTTERFREE, 10
+	db -1
+; rare
+	db 50, CATERPIE,   10
+	db 15, PINECO,     10
+	db 15, PINECO,     10
+	db 10, EXEGGCUTE,  10
+	db  5, EXEGGCUTE,  10
+	db  5, BUTTERFREE, 10
+	db -1
+
+ELIF DEF(_SILVER)
+; common
+	db 50, WEEDLE,     10
+	db 15, WEEDLE,     10
+	db 15, KAKUNA,     10
+	db 10, EXEGGCUTE,  10
+	db  5, EXEGGCUTE,  10
 	db  5, BEEDRILL,   10
 	db -1
 ; rare
-	db 50, HOOTHOOT,   10
-	db 15, CATERPIE,   10
-	db 15, WEEDLE,     10
-	db 10, HOOTHOOT,   10
-	db  5, METAPOD,    10
-	db  5, KAKUNA,     10
+	db 50, WEEDLE,     10
+	db 15, PINECO,     10
+	db 15, PINECO,     10
+	db 10, EXEGGCUTE,  10
+	db  5, EXEGGCUTE,  10
+	db  5, BEEDRILL,   10
 	db -1
+ENDC
 
 TreeMonSet_Rock:
 	db 90, KRABBY,     15
