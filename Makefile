@@ -165,10 +165,12 @@ pokesilver_vc_base    = us
 pokegold_debug_base   = dbg
 pokesilver_debug_base = dbg
 
+.gbc: tools/bankends
 %.gbc: $$(%_obj) layout.link
 	$(RGBLINK) -n $*.sym -m $*.map -l layout.link -o $@ $(filter %.o,$^)
 	$(RGBFIX) $($*_opt) $@
 	tools/stadium --base $($*_base) $@
+	tools/bankends -q $(basename $@).map
 
 
 ### LZ compression rules
