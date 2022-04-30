@@ -621,9 +621,6 @@ KRIS EQU __trainer_class__
 	const EDMOND
 	const NEAL
 	const LI
-	const GAKU
-	const MASA
-	const KOJI
 
 	trainerclass MEDIUM ; 39
 	const MARTHA
