@@ -3131,24 +3131,6 @@ SageGroup:
 	db 10, HOOTHOOT
 	db -1 ; end
 
-	; SAGE (10)
-	db "GAKU@", TRAINERTYPE_NORMAL
-	db 32, NOCTOWL
-	db 32, FLAREON
-	db -1 ; end
-
-	; SAGE (11)
-	db "MASA@", TRAINERTYPE_NORMAL
-	db 32, NOCTOWL
-	db 32, JOLTEON
-	db -1 ; end
-
-	; SAGE (12)
-	db "KOJI@", TRAINERTYPE_NORMAL
-	db 32, NOCTOWL
-	db 32, VAPOREON
-	db -1 ; end
-
 MediumGroup:
 	; MEDIUM (1)
 	db "MARTHA@", TRAINERTYPE_NORMAL

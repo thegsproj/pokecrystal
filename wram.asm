@@ -3059,7 +3059,7 @@ wOlivineCitySceneID::                             db
 wRoute34SceneID::                                 db
 wRoute34IlexForestGateSceneID::                   db
 wEcruteakTinTowerEntranceSceneID::                db
-wWiseTriosRoomSceneID::                           db
+	ds 1
 wEcruteakPokecenter1FSceneID::                    db
 wEcruteakGymSceneID::                             db
 wMahoganyTownSceneID::                            db
