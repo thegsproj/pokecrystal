@@ -75,7 +75,7 @@ _TitleScreen:
 
 ### WRAM wLYOverrides2 addition
 
-I needed to add a `wLYOverrides2` buffer to `wram.asm`. This requires an additional 144 bytes of wram. I placed it in approximately the same location as pokegold, near `wLYOverrides`. I also removed 106 bytes that was empty nearby.
+I needed to add a `wLYOverrides2` buffer to `wram.asm`. WLYOverrides2 partially overlaps wLYOverridesBackup in original pokegold.
 
 `wram.asm`
 
@@ -83,10 +83,8 @@ I needed to add a `wLYOverrides2` buffer to `wram.asm`. This requires an additio
  wLYOverrides:: ds SCREEN_HEIGHT_PX
  wLYOverridesEnd::
 
--    ds 1
-+wLYOverrides2:: ds SCREEN_HEIGHT_PX
-+wLYOverrides2End::
-
+- ds 1
+-
  wMagnetTrain:: ; used only for BANK(wMagnetTrain)
  wMagnetTrainDirection:: db
  wMagnetTrainInitPosition:: db
@@ -94,8 +92,12 @@ I needed to add a `wLYOverrides2` buffer to `wram.asm`. This requires an additio
  wMagnetTrainFinalPosition:: db
  wMagnetTrainPlayerSpriteInitX:: db
 
--    ds 106
--
- wLYOverridesBackup:: ds SCREEN_HEIGHT_PX
+- ds 106
++	ds 11
+
+-wLYOverridesBackup:: ds SCREEN_HEIGHT_PX
++wLYOverrides2:: ds SCREEN_HEIGHT_PX - 48
++wLYOverridesBackup:: ds SCREEN_HEIGHT_PX - 96
++wLYOverrides2End:: ds SCREEN_HEIGHT_PX - 48
  wLYOverridesBackupEnd::
 ```
