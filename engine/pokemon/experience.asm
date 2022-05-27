@@ -22,6 +22,13 @@ CalcLevel:
 	ldh a, [hProduct + 1]
 	ld c, a
 	ld a, [hl]
+	push de
+	push af
+	and EXP_MASK
+	ld d, a
+	pop af
+	ld a, d
+	pop de
 	sbc c
 	pop hl
 	jr nc, .next_level

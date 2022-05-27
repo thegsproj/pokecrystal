@@ -78,7 +78,11 @@ MON_SPECIES            rb
 MON_ITEM               rb
 MON_MOVES              rb NUM_MOVES
 MON_ID                 rw
-MON_EXP                rb 3
+MON_EXP                rb
+rsset MON_EXP
+MON_CAUGHTTIME         rb
+MON_EXP2               rb
+MON_EXP3               rb
 MON_STAT_EXP           rw NUM_EXP_STATS
 rsset MON_STAT_EXP
 MON_HP_EXP             rw
@@ -92,7 +96,7 @@ MON_HAPPINESS          rb
 MON_POKERUS            rb
 MON_CAUGHTDATA         rw
 rsset MON_CAUGHTDATA
-MON_CAUGHTTIME         rb
+                       rb_skip
 MON_CAUGHTGENDER       rb
 rsset MON_CAUGHTDATA
 MON_CAUGHTLEVEL        rb
@@ -115,10 +119,11 @@ PARTYMON_STRUCT_LENGTH EQU _RS
 NICKNAMED_MON_STRUCT_LENGTH EQU PARTYMON_STRUCT_LENGTH + MON_NAME_LENGTH
 REDMON_STRUCT_LENGTH EQU 44
 
-; caught data
+; experience data
+CAUGHT_TIME_MASK EQU %11000000
+EXP_MASK         EQU %00111111
 
-CAUGHT_TIME_MASK  EQU %11000000
-CAUGHT_LEVEL_MASK EQU %00111111
+; caught data
 
 CAUGHT_GENDER_MASK   EQU %10000000
 CAUGHT_LOCATION_MASK EQU %01111111
