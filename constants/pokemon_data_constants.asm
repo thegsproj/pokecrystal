@@ -96,7 +96,7 @@ MON_HAPPINESS          rb
 MON_POKERUS            rb
 MON_CAUGHTDATA         rw
 rsset MON_CAUGHTDATA
-MON_EMPTY_BIT          rb
+                       rb_skip
 MON_CAUGHTGENDER       rb
 rsset MON_CAUGHTDATA
 MON_CAUGHTLEVEL        rb
