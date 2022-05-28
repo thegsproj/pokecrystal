@@ -24,21 +24,6 @@ This should apply the patch where it is able, and files with conflicts will outp
 
 This branch not only adds the Gold/Silver Intro movie and dependency stuff (graphics, code, ect) it also deletes the no longer needed Crystal Intro Movie dependency stuff. There are a few extra changes that should be noted:
 
-### Lapras Graphical Bug
-
-The following change was needed to avoid a graphical problem in the Lapras scene. 
-
-<img src="images/GS_Intro_Lapra_Graphical_Bug.png" title="" alt="" width="323">
-
-```diff
- ld d, a
-+; The next line was originally set to hCurSpriteYCoord,
-+; however, this caused graphical issues. Not sure why
-+; this needs to be set to hCurSpriteYPixel instead.
--ld hl, hCurSpriteYCoord
-+ld hl, hCurSpriteYPixel
- add hl, de
-```
 
 ### Crystal Title Screen Graphical Bug
 
