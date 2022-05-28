@@ -163,3 +163,8 @@ SCENE_ALWAYS   EQU -1
 	const_def
 	const SCENE_VERMILIONCITY_NOTHING            ; 0
 	const SCENE_VERMILIONCITY_SUICUNE_AND_EUSINE ; 1
+
+; wRoute14SceneID
+	const_def
+	const SCENE_ROUTE14_NOTHING            ; 0
+	const SCENE_ROUTE14_SUICUNE_AND_EUSINE ; 1
