@@ -438,7 +438,7 @@ Intro_UpdateTilemapAndBGMap:
 	ld e, a
 	ld a, [wIntroTilemapPointer + 1]
 	ld d, a
-	ld hl, -$10
+	ld hl, -BG_MAP_WIDTH / 2
 	add hl, de
 	ld a, l
 	ld e, l
@@ -458,10 +458,7 @@ Intro_UpdateTilemapAndBGMap:
 	ld e, a
 	ld a, [wIntroBGMapPointer + 1]
 	ld d, a
-; The next line was originally set to hCurSpriteYCoord,
-; however, this caused graphical issues. Not sure why
-; this needs to be set to hCurSpriteYPixel instead.
-	ld hl, hCurSpriteYPixel
+	ld hl, -2 * BG_MAP_WIDTH
 	add hl, de
 	ld a, l
 	ld [wIntroBGMapPointer + 0], a
