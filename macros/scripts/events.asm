@@ -1065,4 +1065,13 @@ checksave: MACRO
 	db checksave_command
 ENDM
 
+	const warpfacingreloadmapafterbattle_command ; $aa
+warpfacingreloadmapafterbattle: MACRO
+	db warpfacingreloadmapafterbattle_command
+	db \1 ; facing
+	map_id \2 ; map
+	db \3 ; x
+	db \4 ; y
+ENDM
+
 NUM_EVENT_COMMANDS EQU const_value

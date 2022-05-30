@@ -30,8 +30,10 @@ SCENE_ALWAYS   EQU -1
 
 ; wRoute25SceneID
 	const_def
-	const SCENE_ROUTE25_NOTHING     ; 0
-	const SCENE_ROUTE25_MISTYS_DATE ; 1
+	const SCENE_ROUTE25_NOTHING                             ; 0
+	const SCENE_ROUTE25_MISTYS_DATE                         ; 1
+	const SCENE_ROUTE25_SUICUNE_AND_EUSINE                  ; 2
+	const SCENE_ROUTE25_SUICUNE_AND_EUSINE_READY_FOR_BATTLE ; 3
 
 ; wLancesRoomSceneID
 	const_def 1
