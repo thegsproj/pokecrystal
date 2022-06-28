@@ -218,9 +218,9 @@ SetBoxMonCaughtData:
 
 SetGiftBoxMonCaughtData:
 	push bc
-	ld a, BANK(sBoxMon1CaughtTime)
+	ld a, BANK(sBoxMon1CaughtLevel)
 	call OpenSRAM
-	ld hl, sBoxMon1CaughtTime
+	ld hl, sBoxMon1CaughtLevel
 	pop bc
 	call SetGiftMonCaughtData
 	call CloseSRAM
@@ -229,7 +229,7 @@ SetGiftBoxMonCaughtData:
 SetGiftPartyMonCaughtData:
 	ld a, [wPartyCount]
 	dec a
-	ld hl, wPartyMon1CaughtTime
+	ld hl, wPartyMon1CaughtLevel
 	push bc
 	call GetPartyLocation
 	pop bc
